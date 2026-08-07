@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router";
 import AuthLayout from "../app/layout/AuthLayout";
 import PublicProtected from "./protected/PublicProtected";
@@ -10,8 +10,21 @@ import Homepage from "../app/shared/ui/pages/Homepage";
 import ProductsPage from "../features/products/ui/pages/ProductsPage";
 import CartPage from "../features/cart/ui/pages/CartPage";
 import OrderPage from "../features/orders/ui/pages/OrderPage";
+import { hydrateUser } from "../features/auth/api/authAPI";
 
 const AppRoutes = () => {
+  useEffect(() => {
+    (async () => {
+      try {
+        let response = await hydrateUser();
+        console.log(response);
+      } catch (error) {
+        console.log("error in hydration..", error);
+        
+      }
+    })
+  }, []);
+
   let router = createBrowserRouter([
     {
       path: "/",
