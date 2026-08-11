@@ -13,20 +13,15 @@ import OrderPage from "../features/orders/ui/pages/OrderPage";
 import { hydrateUser } from "../features/auth/api/authApi";
 import { useDispatch } from "react-redux";
 import { addUser, removeUser } from "../features/auth/state/authSlice";
+import { hydrateUserAction } from "../features/auth/state/authAction";
 
 const AppRoutes = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    (async () => {
+    (() => {
       try {
-        const response = await hydrateUser();
-
-        if (response?.user || response?.id || response?.username) {
-          dispatch(addUser(response));
-        } else {
-          dispatch(removeUser());
-        }
+        dispatch(hydrateUserAction())
       } catch (error) {
         console.log("error in hydration..", error);
         dispatch(removeUser());
