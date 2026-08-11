@@ -15,7 +15,7 @@ export const hydrateUser = async () => {
   let token = localStorage.getItem("accessToken");
 
   try {
-    let res = await api.post("/auth/me", {
+    let res = await api.get("/auth/me", {
       headers: {
         Authorization: `Bearer ${token}`,
       },

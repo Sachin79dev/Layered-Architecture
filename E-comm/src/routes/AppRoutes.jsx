@@ -10,26 +10,29 @@ import Homepage from "../app/shared/ui/pages/Homepage";
 import ProductsPage from "../features/products/ui/pages/ProductsPage";
 import CartPage from "../features/cart/ui/pages/CartPage";
 import OrderPage from "../features/orders/ui/pages/OrderPage";
-import { hydrateUser } from "../features/auth/api/authAPI";
+import { hydrateUser } from "../features/auth/api/authApi";
 import { useDispatch } from "react-redux";
-import { addUser } from "../features/auth/state/authSlice";
+import { addUser, removeUser } from "../features/auth/state/authSlice";
 
 const AppRoutes = () => {
-
-let dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   useEffect(() => {
     (async () => {
       try {
-        let response = await hydrateUser();
-        console.log(response);
-        dispatch(addUser(response))
+        const response = await hydrateUser();
+
+        if (response?.user || response?.id || response?.username) {
+          dispatch(addUser(response));
+        } else {
+          dispatch(removeUser());
+        }
       } catch (error) {
         console.log("error in hydration..", error);
-        
+        dispatch(removeUser());
       }
-    })
-  }, []);
+    })();
+  }, [dispatch]);
 
   let router = createBrowserRouter([
     {
