@@ -14,6 +14,7 @@ import { hydrateUser } from "../features/auth/api/authApi";
 import { useDispatch } from "react-redux";
 import { addUser, removeUser } from "../features/auth/state/authSlice";
 import { hydrateUserAction } from "../features/auth/state/authAction";
+import AboutPage from "../app/shared/ui/pages/AboutPage";
 
 const AppRoutes = () => {
   const dispatch = useDispatch();
@@ -65,6 +66,10 @@ const AppRoutes = () => {
             {
               path: "product",
               element: <ProductsPage />,
+            },
+            {
+              path: "about",
+              element: <AboutPage />,
             },
             {
               path: "cart",
